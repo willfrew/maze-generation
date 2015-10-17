@@ -6,39 +6,39 @@ import (
 	"time"
 )
 
-// North | South | East | West
+// north | south | east | west
 type direction int
 
 // Constants to signify which walls of a maze cell have been removed.
 const (
-	North = 1 << iota
-	East
-	South
-	West
+	north = 1 << iota
+	east
+	south
+	west
 )
 
 // Maps directions to Δx
 var dx = map[direction]int{
-	North: 0,
-	East:  1,
-	South: 0,
-	West:  -1,
+	north: 0,
+	east:  1,
+	south: 0,
+	west:  -1,
 }
 
 // Maps directions to Δy
 var dy = map[direction]int{
-	North: -1,
-	East:  0,
-	South: 1,
-	West:  0,
+	north: -1,
+	east:  0,
+	south: 1,
+	west:  0,
 }
 
 // Opposite directions
 var Opposite = map[direction]direction{
-	North: South,
-	East:  West,
-	South: North,
-	West:  East,
+	north: south,
+	east:  west,
+	south: north,
+	west:  east,
 }
 
 // Cell is a single position in a Maze.
@@ -85,7 +85,7 @@ func shuffleDirections(slice []direction) {
 func (maze *Maze) carvePassagesFrom(cx, cy int) {
 	var (
 		d          direction
-		directions = []direction{North, East, South, West}
+		directions = []direction{north, east, south, west}
 	)
 	shuffleDirections(directions)
 	for i := range directions {
@@ -115,13 +115,13 @@ func (maze *Maze) print() {
 	for y := 0; y < maze.height; y++ {
 		fmt.Print("|")
 		for x := 0; x < maze.width; x++ {
-			if maze.cells[y][x]&South != 0 || maze.isExit(x, y) {
+			if maze.cells[y][x]&south != 0 || maze.isExit(x, y) {
 				fmt.Print(" ")
 			} else {
 				fmt.Print("_")
 			}
-			if maze.cells[y][x]&East != 0 {
-				if (maze.cells[y][x]|maze.cells[y][x+1])&South != 0 {
+			if maze.cells[y][x]&east != 0 {
+				if (maze.cells[y][x]|maze.cells[y][x+1])&south != 0 {
 					fmt.Print(" ")
 				} else {
 					fmt.Print("_")
