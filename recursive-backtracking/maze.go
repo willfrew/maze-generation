@@ -52,7 +52,7 @@ type Maze struct {
 }
 
 // NewMaze creates a new width x height Maze
-func NewMaze(width int, height int) Maze {
+func NewMaze(width, height int) Maze {
 	m := Maze{
 		width,
 		height,
@@ -70,7 +70,7 @@ func (maze *Maze) generate() {
 	maze.carvePassagesFrom(0, 0)
 }
 
-func between(x int, min int, max int) bool {
+func between(x, min, max int) bool {
 	return (x >= min && x <= max)
 }
 
@@ -82,7 +82,7 @@ func shuffleDirections(slice []direction) {
 }
 
 // carvePassagesFrom creates a maze starting from cell cx, cy
-func (maze *Maze) carvePassagesFrom(cx int, cy int) {
+func (maze *Maze) carvePassagesFrom(cx, cy int) {
 	var (
 		d          direction
 		directions = []direction{North, East, South, West}
@@ -101,7 +101,7 @@ func (maze *Maze) carvePassagesFrom(cx int, cy int) {
 	}
 }
 
-func (maze *Maze) isExit(x int, y int) bool {
+func (maze *Maze) isExit(x, y int) bool {
 	return x == maze.width-1 && y == maze.height-1
 }
 
