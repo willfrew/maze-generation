@@ -52,7 +52,7 @@ type Maze struct {
 }
 
 // NewMaze creates a new width x height Maze
-func NewMaze(width, height int) Maze {
+func NewMaze(width, height int) *Maze {
 	m := Maze{
 		width,
 		height,
@@ -62,7 +62,7 @@ func NewMaze(width, height int) Maze {
 	for i := range m.cells {
 		m.cells[i] = make([]Cell, width)
 	}
-	return m
+	return &m
 }
 
 func (maze *Maze) generate() {
@@ -112,16 +112,16 @@ func (maze *Maze) print() {
 		fmt.Print("_")
 	}
 	fmt.Print("\n")
-	for y := 0; y < maze.height; y++ {
+	for y, row := range maze.cells {
 		fmt.Print("|")
-		for x := 0; x < maze.width; x++ {
-			if maze.cells[y][x]&south != 0 || maze.isExit(x, y) {
+		for x, cell := range row {
+			if cell&south != 0 || maze.isExit(x, y) {
 				fmt.Print(" ")
 			} else {
 				fmt.Print("_")
 			}
-			if maze.cells[y][x]&east != 0 {
-				if (maze.cells[y][x]|maze.cells[y][x+1])&south != 0 {
+			if cell&east != 0 {
+				if (cell|row[x+1])&south != 0 {
 					fmt.Print(" ")
 				} else {
 					fmt.Print("_")
